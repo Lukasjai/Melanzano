@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.melanzano.screens.AddNoteScreen
 import com.example.melanzano.screens.HomeScreen
+import com.example.melanzano.screens.ClockScreen
 import com.example.melanzano.viewmodels.NoteViewModel
 
 @Composable
@@ -20,5 +21,7 @@ fun AppNavigation(navController: NavHostController = rememberNavController()){
         composable(route = "homescreen") { HomeScreen(viewModel = noteViewModel) }
 
         composable(route = "addnotescreen") { AddNoteScreen(viewModel = noteViewModel) }
+
+        composable(route = "clockscreen") { ClockScreen(viewModel = noteViewModel) }
     }
 }

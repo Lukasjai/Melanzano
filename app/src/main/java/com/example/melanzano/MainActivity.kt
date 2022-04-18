@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -85,6 +86,13 @@ class MainActivity : ComponentActivity() {
                                 selected = currentRoute == "addnotescreen",
                                 onClick = {
                                     navController.navigate("addnotescreen")
+                                },
+                            )
+                            BottomNavigationItem(
+                                icon = { Icon(imageVector = Icons.Default.AddCircle, contentDescription = "clockscreen") },
+                                selected = currentRoute == "clockscreen",
+                                onClick = {
+                                    navController.navigate("clockscreen")
                                 },
                             )
                         }
