@@ -11,17 +11,19 @@ import com.example.melanzano.screens.AddNoteScreen
 import com.example.melanzano.screens.HomeScreen
 import com.example.melanzano.screens.ClockScreen
 import com.example.melanzano.viewmodels.NoteViewModel
+import com.example.melanzano.viewmodels.TimerViewModel
 
 @Composable
 fun AppNavigation(navController: NavHostController = rememberNavController()){
     //
     val noteViewModel: NoteViewModel = viewModel()
+    val timerViewModel: TimerViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = "homescreen"){
         composable(route = "homescreen") { HomeScreen(viewModel = noteViewModel) }
 
         composable(route = "addnotescreen") { AddNoteScreen(viewModel = noteViewModel) }
 
-        composable(route = "clockscreen") { ClockScreen(viewModel = noteViewModel) }
+        composable(route = "clockscreen") { ClockScreen(viewModel = timerViewModel) }
     }
 }
