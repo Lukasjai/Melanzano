@@ -10,11 +10,12 @@ import kotlinx.coroutines.runBlocking
 class TimerViewModel : ViewModel() {
     var timeInSeconds = mutableStateOf(10)
     var isFinished = false
+    private lateinit var timer : CountDownTimer
 
     //Countdown timer that takes the specified time in seconds and starts a timer ticking down in seconds
     fun startTimeCounter() {
         val timerLength = timeInSeconds.value * 1000.toLong()
-        object : CountDownTimer(timerLength, 1000) {
+      timer =  object : CountDownTimer(timerLength, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeInSeconds.value--
             }
@@ -22,7 +23,10 @@ class TimerViewModel : ViewModel() {
             override fun onFinish() {
                 isFinished = true
             }
+
+
         }.start()
+
     }
 
 

@@ -12,7 +12,11 @@ class NoteViewModel : ViewModel() {
             listOf(
                 Note("Do MAD Learning Dirary 4", "23.03.2022 10:00"),
                 Note("Do Datenbanken", "24.03.2022 11:32"),
-            )
+                Note("Dies ist eine ziemlich lange Nachricht mal schauen wie lang ich brauche bis der Mistkübel nicht mehr verschwindet :)", "24.03.2022 11:32"),
+                Note("Dies ist eine ziemlich lange Nachricht mal schauen wie lang ich brauche", "24.03.2022 11:32"),
+                Note("Dies ist eine ziemlich lange Nachricht", "24.03.2022 11:32"),
+
+                )
         )
     }
 

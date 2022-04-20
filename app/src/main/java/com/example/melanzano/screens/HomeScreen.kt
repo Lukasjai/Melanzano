@@ -23,14 +23,6 @@ fun HomeScreen(viewModel: NoteViewModel = viewModel()){
             style = MaterialTheme.typography.h5)
         Text(text = "Your To Do´s:")
 
-        /*
-        val notes = listOf(
-            Note("Buy Groceries", "23.03.2022 10:00"),
-            Note("Lorem Ipsum", "24.03.2022 11:32"),
-        )
-
-         */
-
         NoteCards(
             notes = viewModel.getAllNotes()
         ){ note ->

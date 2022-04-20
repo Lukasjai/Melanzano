@@ -1,6 +1,7 @@
 package com.example.melanzano.widgets
 
 import android.util.Log
+import android.widget.CheckBox
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,36 +22,39 @@ import java.util.*
 fun NoteCard(
     note: Note,
     onDeleteClick: (Note) -> Unit = {}
-){
+) {
+    val checkedState = remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(6.dp),
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        elevation = 6.dp) {
+        elevation = 6.dp
+    ) {
 
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.Start) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                //horizontalArrangement = Arrangement.SpaceBetween
             ) {
-
-                Text(
-                    text = note.date,
-                    style = MaterialTheme.typography.caption
+                Checkbox(
+                    checked = checkedState.value,
+                    onCheckedChange = { checkedState.value = it }
                 )
-
+                Text(
+                    text = note.text,
+                    style = MaterialTheme.typography.body2
+                )
                 IconButton(onClick = {
                     onDeleteClick(note)
                 }) {
                     Icon(imageVector = Icons.Default.Delete, contentDescription = "remove note")
                 }
             }
-
             Text(
-                text = note.text,
-                style = MaterialTheme.typography.body2
+                text = note.date,
+                style = MaterialTheme.typography.caption
             )
         }
     }
@@ -60,7 +64,7 @@ fun NoteCard(
 fun NoteCards(
     notes: List<Note> = listOf(),
     onDeleteClick: (Note) -> Unit = {}
-){
+) {
     LazyColumn {
         items(notes) { note ->
             NoteCard(note) { note ->
@@ -73,23 +77,25 @@ fun NoteCards(
 @Composable
 fun AddNoteWidget(
     onSaveClick: (Note) -> Unit = {}
-){
-    Text(text = "Add a ToDo",
+) {
+    Text(
+        text = "Add a ToDo",
         style = MaterialTheme.typography.h5,
-        color = MaterialTheme.colors.primaryVariant)
+        color = MaterialTheme.colors.primaryVariant
+    )
 
     var text by remember { mutableStateOf("") }
 
     OutlinedTextField(
         value = text,
-        onValueChange = { value -> text = value},
-        label = { Text(text = "Note")}
+        onValueChange = { value -> text = value },
+        label = { Text(text = "Note") }
     )
 
     Button(
         modifier = Modifier.padding(16.dp),
         onClick = {
-            if(text.isNotEmpty()){
+            if (text.isNotEmpty()) {
                 val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY)
                 val currentDate = sdf.format(Date())
                 val newNote = Note(text, currentDate)
@@ -103,7 +109,7 @@ fun AddNoteWidget(
 
         }) {
 
-        Text( text = "Save")
+        Text(text = "Save")
     }
 }
 

@@ -20,6 +20,7 @@ import com.example.melanzano.widgets.AddNoteWidget
 import com.example.melanzano.widgets.NoteCards
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import kotlin.concurrent.timer
 
 @Preview(showBackground = true)
 @Composable
@@ -79,17 +80,27 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
                 style = typography.caption
             )
         }
-        Button(onClick = {
-            timerStarted = !timerStarted
-            viewModel.startTimeCounter()
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 2.dp, end = 2.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically) {
+            Button(onClick = {
+                timerStarted = !timerStarted
+                viewModel.startTimeCounter()
 
-        }) {
-            if (timerStarted){
-                Text(text = "Stop the count!")
-            }
-            else {
-                Text(text = "Start timer")
-            }
+            }) {
+                if (timerStarted){
+                    Text(text = "Stop the count!")
+                }
+                else {
+                    Text(text = "Start timer")
+                }
+        }
+            Button(onClick = {
+                viewModel.timeInSeconds
+
+            }) { Text(text = "Stop")}
         }
     }
 
