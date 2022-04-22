@@ -64,4 +64,11 @@ dependencies {
 
     // ViewModel utilities for Compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+
+    //Coil
+    implementation("io.coil-kt:coil:$coil_version")
+    //Coil-Compose
+    implementation("io.coil-kt:coil-compose:$coil_compose")
+
+
 }
