@@ -6,6 +6,7 @@ import com.example.melanzano.models.Note
 
 class NoteViewModel : ViewModel() {
     private var notes = mutableStateListOf<Note>()
+    private var doneTasks = mutableStateListOf<Note>()
 
     init {
         notes.addAll(
@@ -30,6 +31,14 @@ class NoteViewModel : ViewModel() {
 
     fun getAllNotes(): List<Note>{
         return notes
+    }
+
+    fun addDoneTask(note: Note){
+        doneTasks.add(note)
+    }
+
+    fun removeDoneTasks(note: Note){
+        doneTasks.remove(note)
     }
 
     fun sortNotes(){

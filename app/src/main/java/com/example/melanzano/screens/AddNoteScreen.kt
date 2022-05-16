@@ -12,7 +12,6 @@ import com.example.melanzano.viewmodels.NoteViewModel
 import com.example.melanzano.widgets.AddNoteWidget
 import com.example.melanzano.widgets.NoteCards
 
-@Preview(showBackground = true)
 @Composable
 fun AddNoteScreen(viewModel: NoteViewModel = viewModel()){
     Column(modifier = Modifier

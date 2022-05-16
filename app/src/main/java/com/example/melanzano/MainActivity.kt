@@ -12,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -93,6 +94,13 @@ class MainActivity : ComponentActivity() {
                                 selected = currentRoute == "clockscreen",
                                 onClick = {
                                     navController.navigate("clockscreen")
+                                },
+                            )
+                            BottomNavigationItem(
+                                icon = { Icon(imageVector = Icons.Default.Done, contentDescription = "workdonescreen") },
+                                selected = currentRoute == "workdonescreen",
+                                onClick = {
+                                    navController.navigate("workdonescreen")
                                 },
                             )
                         }

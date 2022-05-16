@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.melanzano.models.Note
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,12 +41,17 @@ fun NoteCard(
             ) {
                 Checkbox(
                     checked = checkedState.value,
-                    onCheckedChange = { checkedState.value = it },
+                    onCheckedChange = { checkedState.value = it
+                    if (checkedState.value){
+
+                    }else{
+
+                    }},
                     modifier = Modifier.absolutePadding(0.dp, 0.dp,10.dp, 0.dp)
                 )
                 Text(
                     text = note.text,
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.body1,
                     modifier = Modifier.width(250.dp)
                 )
                 IconButton(onClick = {
@@ -95,7 +101,7 @@ fun AddNoteWidget(
     )
 
     Button(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(20.dp),
         onClick = {
             if (text.isNotEmpty()) {
                 val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY)

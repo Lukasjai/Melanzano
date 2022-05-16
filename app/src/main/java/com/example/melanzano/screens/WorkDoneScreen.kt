@@ -15,7 +15,7 @@ import com.example.melanzano.viewmodels.NoteViewModel
 import com.example.melanzano.widgets.NoteCards
 
 @Composable
-fun HomeScreen(viewModel: NoteViewModel = viewModel()) {
+fun WorkDoneScreen(viewModel: NoteViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -26,7 +26,7 @@ fun HomeScreen(viewModel: NoteViewModel = viewModel()) {
             modifier = Modifier.padding(12.dp)
         ) {
             Text(
-                text = "Melanzano",
+                text = "Work Done",
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
                 style = MaterialTheme.typography.h4
             )
@@ -39,7 +39,7 @@ fun HomeScreen(viewModel: NoteViewModel = viewModel()) {
             )
         }
 
-        Text(text = "Your To Do´s:")
+        Text(text = "Your done Tasks:")
 
         NoteCards(
             notes = viewModel.getAllNotes()
