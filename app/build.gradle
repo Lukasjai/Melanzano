@@ -70,5 +70,8 @@ dependencies {
     //Coil-Compose
     implementation("io.coil-kt:coil-compose:$coil_compose")
 
+    //Number picker
+    //implementation("com.chargemap.compose:numberpicker:latestVersion")
+    implementation 'com.chillibits:composenumberpicker:1.1.1'
 
 }
