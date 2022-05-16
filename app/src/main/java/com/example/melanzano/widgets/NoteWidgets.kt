@@ -34,17 +34,19 @@ fun NoteCard(
 
         Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.Start) {
             Row(
-                modifier = Modifier.padding(10.dp),
+                modifier = Modifier.padding(10.dp).fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 //horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Checkbox(
                     checked = checkedState.value,
-                    onCheckedChange = { checkedState.value = it }
+                    onCheckedChange = { checkedState.value = it },
+                    modifier = Modifier.absolutePadding(0.dp, 0.dp,10.dp, 0.dp)
                 )
                 Text(
                     text = note.text,
-                    style = MaterialTheme.typography.body2
+                    style = MaterialTheme.typography.body2,
+                    modifier = Modifier.width(250.dp)
                 )
                 IconButton(onClick = {
                     onDeleteClick(note)

@@ -1,6 +1,8 @@
 package com.example.melanzano.screens
 
 import android.support.v4.os.IResultReceiver
+import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -10,10 +12,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chillibits.composenumberpicker.HorizontalNumberPicker
 import com.example.melanzano.viewmodels.NoteViewModel
 import com.example.melanzano.viewmodels.TimerViewModel
 import com.example.melanzano.widgets.AddNoteWidget
@@ -86,21 +90,35 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically) {
             Button(onClick = {
-                timerStarted = !timerStarted
-                viewModel.startTimeCounter()
+
+                if (!viewModel.timerStarted.value) {
+                    viewModel.startTimeCounter()
+                } else {
+                    viewModel.reset()
+                }
 
             }) {
-                if (timerStarted){
-                    Text(text = "Stop the count!")
+                if (viewModel.timerStarted.value){
+                    Text(text = "Reset")
                 }
                 else {
                     Text(text = "Start timer")
                 }
+            }
         }
-            Button(onClick = {
-                viewModel.timeInSeconds
+        Row(modifier = Modifier.fillMaxWidth()) {
 
-            }) { Text(text = "Stop")}
+            var context = LocalContext.current
+
+            HorizontalNumberPicker(
+                min = 10,
+                max = 100,
+                default = 50,
+                modifier = Modifier.padding(10.dp),
+                onValueChange = { value ->
+                    Toast.makeText(context, value.toString(), Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     }
 
