@@ -3,9 +3,6 @@ package com.example.melanzano.viewmodels
 import android.os.CountDownTimer
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class TimerViewModel : ViewModel() {
     var timeInSeconds = mutableStateOf(10)
@@ -30,9 +27,9 @@ class TimerViewModel : ViewModel() {
 
     }
 
-    fun reset(){
+    fun reset(timerLength: Int){
         timer.cancel()
-        timeInSeconds.value = 20
+        timeInSeconds.value = timerLength
         timerStarted.value = false
     }
 
