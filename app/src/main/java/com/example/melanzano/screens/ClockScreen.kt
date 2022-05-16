@@ -3,6 +3,7 @@ package com.example.melanzano.screens
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -25,17 +26,23 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
 
     val f: NumberFormat = DecimalFormat("00")
 
-    val TIMER_DEFAULT = 50
+    val TIMER_DEFAULT_Sec = 0
 
     var timerSec by remember {
-        mutableStateOf(TIMER_DEFAULT)
+        mutableStateOf(TIMER_DEFAULT_Sec)
+    }
+
+    val TIMER_DEFAULT_Min = 20
+
+    var timerMin by remember {
+        mutableStateOf(TIMER_DEFAULT_Min)
     }
     
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(16.dp),
+            .padding(40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -89,7 +96,7 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
                 if (!viewModel.timerStarted.value) {
                     viewModel.startTimeCounter()
                 } else {
-                    viewModel.reset(timerSec)
+                    viewModel.reset((timerSec +(timerMin *60)))
                 }
 
             }) {
@@ -101,16 +108,30 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
                 }
             }
         }
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Divider(modifier = Modifier.padding(40.dp))
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             HorizontalNumberPicker(
-                min = 10,
-                max = 100,
-                default = TIMER_DEFAULT,
+                min = 0,
+                max = 59,
+                default = TIMER_DEFAULT_Sec,
                 modifier = Modifier.padding(10.dp),
                 onValueChange = { value ->
                     timerSec = value
                 },
             )
+            Text(text = "Sekunden", fontSize = 30.sp)
+        }
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            HorizontalNumberPicker(
+                min = 0,
+                max = 59,
+                default = TIMER_DEFAULT_Min,
+                modifier = Modifier.padding(10.dp),
+                onValueChange = { value ->
+                    timerMin = value
+                },
+            )
+            Text(text = "Minuten", fontSize = 30.sp)
         }
     }
 

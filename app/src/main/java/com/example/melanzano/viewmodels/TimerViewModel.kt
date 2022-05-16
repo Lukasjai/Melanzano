@@ -5,7 +5,7 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 
 class TimerViewModel : ViewModel() {
-    var timeInSeconds = mutableStateOf(10)
+    var timeInSeconds = mutableStateOf(1200)
     var timerStarted = mutableStateOf(false)
     var isFinished = false
     private lateinit var timer : CountDownTimer
