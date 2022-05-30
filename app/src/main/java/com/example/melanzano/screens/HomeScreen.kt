@@ -43,9 +43,16 @@ fun HomeScreen(viewModel: NoteViewModel = viewModel()) {
 
         NoteCards(
             notes = viewModel.getAllNotes(),
-            onBoxTick = {note ->
-                viewModel.addDoneTask(note)}
-        ) { note ->
+            onBoxTick = { note ->
+                if (viewModel.getAllDoneTasks().contains(note)) {
+                    viewModel.removeDoneTasks(note)
+                } else {
+                    viewModel.addDoneTask(note)
+                }
+            }
+        )
+
+        { note ->
             viewModel.removeNote(note)
         }
     }

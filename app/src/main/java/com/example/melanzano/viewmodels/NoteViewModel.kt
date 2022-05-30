@@ -44,12 +44,4 @@ class NoteViewModel : ViewModel() {
     fun removeDoneTasks(note: Note){
         doneTasks.remove(note)
     }
-
-    fun sortNotes(){
-
-    }
-
-    fun filterNotes(){
-
-    }
 }

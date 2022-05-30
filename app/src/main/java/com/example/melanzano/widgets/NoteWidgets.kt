@@ -43,11 +43,8 @@ fun NoteCard(
                 Checkbox(
                     checked = checkedState.value,
                     onCheckedChange = { checkedState.value = it
-                    if (checkedState.value){
                         onBoxTick(note)
-                    }else{
-
-                    }},
+                        },
                     modifier = Modifier.absolutePadding(0.dp, 0.dp,10.dp, 0.dp)
                 )
                 Text(
