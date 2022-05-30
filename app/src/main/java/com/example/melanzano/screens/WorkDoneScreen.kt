@@ -42,7 +42,7 @@ fun WorkDoneScreen(viewModel: NoteViewModel = viewModel()) {
         Text(text = "Your done Tasks:")
 
         NoteCards(
-            notes = viewModel.getAllNotes()
+            notes = viewModel.getAllDoneTasks()
         ) { note ->
             viewModel.removeNote(note)
         }

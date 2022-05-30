@@ -22,6 +22,7 @@ import java.util.*
 @Composable
 fun NoteCard(
     note: Note,
+    onBoxTick: (Note) -> Unit = {},
     onDeleteClick: (Note) -> Unit = {}
 ) {
     val checkedState = remember { mutableStateOf(false) }
@@ -43,7 +44,7 @@ fun NoteCard(
                     checked = checkedState.value,
                     onCheckedChange = { checkedState.value = it
                     if (checkedState.value){
-
+                        onBoxTick(note)
                     }else{
 
                     }},
@@ -71,11 +72,15 @@ fun NoteCard(
 @Composable
 fun NoteCards(
     notes: List<Note> = listOf(),
+    onBoxTick: (Note) -> Unit = {},
     onDeleteClick: (Note) -> Unit = {}
 ) {
     LazyColumn {
         items(notes) { note ->
-            NoteCard(note) { note ->
+            NoteCard(note,
+            onBoxTick= {note ->
+                onBoxTick(note)}) {
+                    note ->
                 onDeleteClick(note)
             }
         }

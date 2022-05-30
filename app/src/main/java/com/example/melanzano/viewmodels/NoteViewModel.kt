@@ -33,6 +33,10 @@ class NoteViewModel : ViewModel() {
         return notes
     }
 
+    fun getAllDoneTasks(): List<Note>{
+        return doneTasks
+    }
+
     fun addDoneTask(note: Note){
         doneTasks.add(note)
     }
