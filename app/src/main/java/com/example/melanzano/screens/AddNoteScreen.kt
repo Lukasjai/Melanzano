@@ -28,7 +28,8 @@ fun AddNoteScreen(viewModel: NoteViewModel = viewModel()){
         Divider()
 
         NoteCards(
-            notes = viewModel.getAllNotes()
+            notes = viewModel.getAllNotes(),
+            trashcan = true,
         ) { note ->
             viewModel.removeNote(note)
         }

@@ -22,6 +22,7 @@ import java.util.*
 @Composable
 fun NoteCard(
     note: Note,
+    trashcan: Boolean,
     onBoxTick: (Note) -> Unit = {},
     onDeleteClick: (Note) -> Unit = {}
 ) {
@@ -56,11 +57,13 @@ fun NoteCard(
                     style = MaterialTheme.typography.body1,
                     modifier = Modifier.width(250.dp)
                 )
-                IconButton(onClick = {
+                if (trashcan){
+                    IconButton(onClick = {
                     onDeleteClick(note)
                 }) {
                     Icon(imageVector = Icons.Default.Delete, contentDescription = "remove note")
-                }
+                }}
+
             }
             Text(
                 text = note.date,
@@ -73,12 +76,14 @@ fun NoteCard(
 @Composable
 fun NoteCards(
     notes: List<Note> = listOf(),
+    trashcan: Boolean,
     onBoxTick: (Note) -> Unit = {},
     onDeleteClick: (Note) -> Unit = {}
 ) {
     LazyColumn {
         items(notes) { note ->
             NoteCard(note,
+                trashcan,
             onBoxTick= {note ->
                 onBoxTick(note)}) {
                     note ->

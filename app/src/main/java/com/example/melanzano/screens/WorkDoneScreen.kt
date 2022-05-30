@@ -43,6 +43,7 @@ fun WorkDoneScreen(viewModel: NoteViewModel = viewModel()) {
 
         NoteCards(
             notes = viewModel.getAllDoneTasks(),
+            trashcan = false,
             onBoxTick = { note ->
                 if (viewModel.getAllDoneTasks().contains(note)) {
                     viewModel.removeDoneTasks(note)
