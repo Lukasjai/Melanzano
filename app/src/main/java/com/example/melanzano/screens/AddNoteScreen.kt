@@ -30,8 +30,10 @@ fun AddNoteScreen(viewModel: NoteViewModel = viewModel()){
         NoteCards(
             notes = viewModel.getAllNotes(),
             trashcan = true,
+            boxVisible = false,
         ) { note ->
             viewModel.removeNote(note)
+            viewModel.removeDoneTasks(note)
         }
     }
 }

@@ -23,6 +23,7 @@ import java.util.*
 fun NoteCard(
     note: Note,
     trashcan: Boolean,
+    boxVisible: Boolean,
     onBoxTick: (Note) -> Unit = {},
     onDeleteClick: (Note) -> Unit = {}
 ) {
@@ -41,7 +42,8 @@ fun NoteCard(
                 verticalAlignment = Alignment.CenterVertically,
                 //horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Checkbox(
+                if (boxVisible){
+                    Checkbox(
                     checked = checkedState.value,
                     onCheckedChange = { checkedState.value = it
                         note.checked = checkedState.value
@@ -51,7 +53,8 @@ fun NoteCard(
                         onBoxTick(note)
                         },
                     modifier = Modifier.absolutePadding(0.dp, 0.dp,10.dp, 0.dp)
-                )
+                    )
+                }
                 Text(
                     text = note.text,
                     style = MaterialTheme.typography.body1,
@@ -77,6 +80,7 @@ fun NoteCard(
 fun NoteCards(
     notes: List<Note> = listOf(),
     trashcan: Boolean,
+    boxVisible: Boolean,
     onBoxTick: (Note) -> Unit = {},
     onDeleteClick: (Note) -> Unit = {}
 ) {
@@ -84,6 +88,7 @@ fun NoteCards(
         items(notes) { note ->
             NoteCard(note,
                 trashcan,
+                boxVisible,
             onBoxTick= {note ->
                 onBoxTick(note)}) {
                     note ->
