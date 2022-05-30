@@ -25,7 +25,7 @@ fun NoteCard(
     onBoxTick: (Note) -> Unit = {},
     onDeleteClick: (Note) -> Unit = {}
 ) {
-    val checkedState = remember { mutableStateOf(false) }
+    val checkedState = remember { mutableStateOf(note.checked) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,6 +43,10 @@ fun NoteCard(
                 Checkbox(
                     checked = checkedState.value,
                     onCheckedChange = { checkedState.value = it
+                        note.checked = checkedState.value
+                        Log.i("info", "note.checked: " + note.checked.toString())
+                        Log.i("info", "checkedStateRememberShit: " + checkedState.value)
+
                         onBoxTick(note)
                         },
                     modifier = Modifier.absolutePadding(0.dp, 0.dp,10.dp, 0.dp)
@@ -108,7 +112,7 @@ fun AddNoteWidget(
             if (text.isNotEmpty()) {
                 val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY)
                 val currentDate = sdf.format(Date())
-                val newNote = Note(text, currentDate)
+                val newNote = Note(text, currentDate, false)
 
                 Log.d("AddNoteScreen", "added ${newNote.text} ${newNote.date}")
 
