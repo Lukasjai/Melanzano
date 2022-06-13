@@ -58,19 +58,28 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically)
         {
-            if (viewModel.timerStarted.value) {
-                Text(
-                    text = "Start working!",
-                    style = typography.caption,
-                    fontSize = 40.sp
-                )
-            }
-            if (viewModel.pauseTimerStarted.value){
-                Text(
-                    text = "Pause :)",
-                    style = typography.caption,
-                    fontSize = 40.sp
-                )
+            when {
+                viewModel.timerStarted.value -> {
+                    Text(
+                        text = "Start working!",
+                        style = typography.caption,
+                        fontSize = 40.sp
+                    )
+                }
+                viewModel.pauseTimerStarted.value -> {
+                    Text(
+                        text = "Pause :)",
+                        style = typography.caption,
+                        fontSize = 40.sp
+                    )
+                }
+                else -> {
+                    Text(
+                        text = "  ",
+                        style = typography.caption,
+                        fontSize = 40.sp
+                    )
+                }
             }
             
         }
