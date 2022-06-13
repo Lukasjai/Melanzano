@@ -35,7 +35,7 @@ fun WorkDoneScreen(viewModel: NoteViewModel = viewModel()) {
             AsyncImage(
                 model = "https://cdn.pixabay.com/photo/2020/03/28/17/01/eggplant-4977808_960_720.png",
                 contentDescription = null,
-                modifier = Modifier.size(60.dp)
+                modifier = Modifier.size(60.dp).padding(3.dp)
             )
         }
 

@@ -1,10 +1,13 @@
 package com.example.melanzano.screens
 
+import android.media.MediaPlayer
 import android.util.Log
-import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
@@ -19,23 +22,37 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.chillibits.composenumberpicker.HorizontalNumberPicker
+import com.example.melanzano.R
 import com.example.melanzano.viewmodels.TimerViewModel
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
 @Preview(showBackground = true)
 @Composable
-fun ClockScreen(viewModel: TimerViewModel = viewModel(),
-                navController: NavController = rememberNavController()) {
-    
-    var showButton by remember{
+fun ClockScreen(
+    viewModel: TimerViewModel = viewModel(),
+    navController: NavController = rememberNavController()
+) {
+
+    // Media Player
+    val context = LocalContext.current
+    val mediaPlayer = MediaPlayer.create(context, R.raw.clock_ticking)
+    val mediaPlayerPauseEnd = MediaPlayer.create(context, R.raw.ding_sound_effect)
+    if (viewModel.playSound.value) {
+        mediaPlayer.start()
+    }
+    if (viewModel.playPauseEnd.value) {
+        mediaPlayerPauseEnd.start()
+    }
+
+
+    var showButton by remember {
         mutableStateOf(false)
     }
 
-    if (viewModel.counter.value < 1){
+    if (viewModel.counter.value < 1) {
         showButton = true
     }
 
@@ -43,7 +60,7 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel(),
 
     val TIMER_DEFAULT_Sec = 5
 
-    var userTime by remember{
+    var userTime by remember {
         mutableStateOf(0)
     }
 
@@ -56,7 +73,7 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel(),
     var timerMin by remember {
         mutableStateOf(TIMER_DEFAULT_Min)
     }
-    
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,11 +82,13 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 2.dp, end = 2.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 2.dp, end = 2.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically)
+            verticalAlignment = Alignment.CenterVertically
+        )
         {
             when {
                 viewModel.timerStarted.value -> {
@@ -94,13 +113,13 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel(),
                     )
                 }
             }
-            
+
         }
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 2.dp, end = 2.dp)
+                .padding(start = 2.dp, end = 2.dp, top = 40.dp, bottom = 40.dp)
                 .border(1.dp, Color.Black, shape = RectangleShape),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
@@ -113,7 +132,8 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel(),
                 style = typography.caption
             )
 
-            Text(text = ":",
+            Text(
+                text = ":",
                 fontSize = 30.sp,
                 color = Color.Black,
                 style = typography.caption,
@@ -126,11 +146,13 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel(),
                 style = typography.caption
             )
 
-            Text(text = ":",
+            Text(
+                text = ":",
                 fontSize = 30.sp,
                 color = Color.Black,
-                style = typography.caption)
-            
+                style = typography.caption
+            )
+
             Text(
                 text = f.format((viewModel.timeInSeconds.value % 60)),
                 fontSize = 40.sp,
@@ -138,27 +160,40 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel(),
                 style = typography.caption
             )
         }
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 2.dp, end = 2.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 2.dp, end = 2.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically) {
-            Button(onClick = {
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(modifier = Modifier
+                .width(200.dp)
+                .height(50.dp),
+                border = BorderStroke(1.dp, Color.Black),
+                shape = RoundedCornerShape(50),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black),
+                onClick = {
 
-                if (!viewModel.timerStarted.value && !viewModel.pauseTimerStarted.value) {
-                    viewModel.startTimeCounter()
+                    if (!viewModel.timerStarted.value && !viewModel.pauseTimerStarted.value) {
+                        viewModel.startTimeCounter()
+                    } else {
+                        userTime = timerSec + (timerMin * 60)
+                        viewModel.userTime = userTime
+                        viewModel.reset((timerSec + (timerMin * 60)))
+                    }
+
+                }) {
+                if (viewModel.timerStarted.value || viewModel.pauseTimerStarted.value) {
+                    Text(
+                        text = "Reset",
+                        fontSize = 15.sp
+                    )
                 } else {
-                    userTime = timerSec + (timerMin * 60)
-                    viewModel.userTime = userTime
-                    viewModel.reset((timerSec +(timerMin *60)))
-                }
-
-            }) {
-                if (viewModel.timerStarted.value || viewModel.pauseTimerStarted.value){
-                    Text(text = "Reset")
-                }
-                else {
-                    Text(text = "Start timer")
+                    Text(
+                        text = "Start timer",
+                        fontSize = 15.sp
+                    )
                 }
             }
         }
@@ -188,18 +223,33 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel(),
             Text(text = "minutes", fontSize = 30.sp)
         }
 
-        Row (modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            if (showButton){
-                Button(onClick = {
-                    Log.i("info", navController.currentBackStackEntry.toString())
-                    navController.navigate("workdonescreen")
-                    showButton = false}) {
-                    Text(text = "Show work done")
+        Divider(modifier = Modifier.padding(40.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 2.dp, end = 2.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (showButton) {
+                Button(modifier = Modifier
+                    .width(200.dp)
+                    .height(50.dp),
+                    border = BorderStroke(1.dp, Color.Black),
+                    shape = RoundedCornerShape(50),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black),
+                    onClick = {
+                        Log.i("info", navController.currentBackStackEntry.toString())
+                        navController.navigate("workdonescreen")
+                        showButton = false
+                    }) {
+                    Text(
+                        text = "Show work done",
+                        fontSize = 15.sp
+                    )
                 }
             }
-
         }
     }
-
-
 }

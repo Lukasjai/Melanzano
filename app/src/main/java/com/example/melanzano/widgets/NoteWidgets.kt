@@ -2,6 +2,7 @@ package com.example.melanzano.widgets
 
 import android.util.Log
 import android.widget.CheckBox
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.melanzano.models.Note
@@ -38,7 +40,9 @@ fun NoteCard(
 
         Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.Start) {
             Row(
-                modifier = Modifier.padding(10.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 //horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -105,7 +109,7 @@ fun AddNoteWidget(
     Text(
         text = "Add a ToDo",
         style = MaterialTheme.typography.h5,
-        color = MaterialTheme.colors.primaryVariant
+        color = Color.Black
     )
 
     var text by remember { mutableStateOf("") }
@@ -113,11 +117,21 @@ fun AddNoteWidget(
     OutlinedTextField(
         value = text,
         onValueChange = { value -> text = value },
-        label = { Text(text = "Note") }
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color.Black,
+            unfocusedBorderColor = Color.LightGray
+        ),
+        label = { Text(text = "Note", color = Color.Black) }
     )
 
     Button(
-        modifier = Modifier.padding(20.dp),
+        modifier = Modifier
+            .padding(20.dp)
+            .width(200.dp)
+            .height(50.dp),
+        border = BorderStroke(1.dp, Color.Black),
+        shape = RoundedCornerShape(50),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black),
         onClick = {
             if (text.isNotEmpty()) {
                 val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY)
