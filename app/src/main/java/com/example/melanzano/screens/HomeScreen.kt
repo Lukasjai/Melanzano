@@ -56,6 +56,7 @@ fun HomeScreen(viewModel: NoteViewModel = viewModel()) {
 
         { note ->
             viewModel.removeNote(note)
+            viewModel.removeDoneTasks(note)
         }
     }
 }

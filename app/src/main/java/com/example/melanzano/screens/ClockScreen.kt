@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.chillibits.composenumberpicker.HorizontalNumberPicker
 import com.example.melanzano.viewmodels.TimerViewModel
 import java.text.DecimalFormat
@@ -22,7 +24,7 @@ import java.text.NumberFormat
 
 @Preview(showBackground = true)
 @Composable
-fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
+fun ClockScreen(viewModel: TimerViewModel = viewModel(), navController: NavController = rememberNavController()) {
 
     val f: NumberFormat = DecimalFormat("00")
 
@@ -132,6 +134,12 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
                 },
             )
             Text(text = "Minuten", fontSize = 30.sp)
+        }
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Pause", fontSize = 30.sp)
+            Button(onClick = { navController.navigate("pausescreen") }) {
+                
+            }
         }
     }
 

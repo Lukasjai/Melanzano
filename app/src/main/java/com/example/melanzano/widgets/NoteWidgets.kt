@@ -50,6 +50,8 @@ fun NoteCard(
                         Log.i("info", "note.checked: " + note.checked.toString())
                         Log.i("info", "checkedStateRememberShit: " + checkedState.value)
 
+
+
                         onBoxTick(note)
                         },
                     modifier = Modifier.absolutePadding(0.dp, 0.dp,10.dp, 0.dp)

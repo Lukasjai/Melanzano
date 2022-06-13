@@ -97,10 +97,10 @@ class MainActivity : ComponentActivity() {
                                 },
                             )
                             BottomNavigationItem(
-                                icon = { Icon(imageVector = Icons.Default.Done, contentDescription = "workdonescreen") },
-                                selected = currentRoute == "workdonescreen",
+                                icon = { Icon(imageVector = Icons.Default.Done, contentDescription = "pausescreen") },
+                                selected = currentRoute == "pausescreen",
                                 onClick = {
-                                    navController.navigate("workdonescreen")
+                                    navController.navigate("pausescreen")
                                 },
                             )
                         }

@@ -56,6 +56,7 @@ fun WorkDoneScreen(viewModel: NoteViewModel = viewModel()) {
 
         { note ->
             viewModel.removeNote(note)
+            viewModel.removeDoneTasks(note)
         }
     }
 }
