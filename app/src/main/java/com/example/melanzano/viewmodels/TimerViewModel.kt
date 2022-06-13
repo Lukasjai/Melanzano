@@ -5,12 +5,15 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 
 class TimerViewModel : ViewModel() {
-    var timeInSeconds = mutableStateOf(1200)
+    var timeInSeconds = mutableStateOf(10)
+    var userTime = timeInSeconds.value
     var timerStarted = mutableStateOf(false)
+    var pauseTimerStarted = mutableStateOf(false)
     var isFinished = false
     private lateinit var timer : CountDownTimer
+    private lateinit var pauseTimer : CountDownTimer
 
-    //Countdown timer that takes the specified time in seconds and starts a timer ticking down in seconds
+    //Countdown timer that takes the specified time in seconds and starts a timer ticking down in second
     fun startTimeCounter() {
         timerStarted = mutableStateOf(true)
         val timerLength = timeInSeconds.value * 1000.toLong()
@@ -22,30 +25,44 @@ class TimerViewModel : ViewModel() {
             override fun onFinish() {
                 timerStarted = mutableStateOf(false)
                 isFinished = true
+                startPauseCounter()
             }
         }.start()
-
     }
 
     fun reset(timerLength: Int){
-        timer.cancel()
+        if (timerStarted.value) {
+            timer.cancel()
+            timerStarted.value = false
+        }
+        if (pauseTimerStarted.value) {
+            pauseTimer.cancel()
+            pauseTimerStarted.value = false
+        }
         timeInSeconds.value = timerLength
-        timerStarted.value = false
+
     }
 
-/*    fun timer() = runBlocking {
-        launch {
-            val max = timeInSeconds.value;
-                delay(1000L)
+    fun startPauseCounter(){
+        pauseTimerStarted.value = true
+        timeInSeconds.value = (userTime * 0.25).toInt()
+        val timerLength = timeInSeconds.value * 1000.toLong()
+        pauseTimer = object : CountDownTimer(timerLength, 1000){
+            override fun onTick(millisUntilFinished: Long){
                 timeInSeconds.value--
-                updateTimer()
-        }}
+            }
 
-    fun updateTimer(){
-        var minutes = (timeInSeconds.value/60).toInt()
-        time.add(0,minutes)
-        var seconds = timeInSeconds.value % 60
-        time.add(1, seconds)
-    }*/
+            override fun onFinish() {
+                pauseTimerStarted.value = false
+                resetTimerAfterPause()
 
+            }
+        }.start()
+    }
+
+
+    fun resetTimerAfterPause(){
+        timeInSeconds.value = userTime
+        startTimeCounter()
+    }
 }
