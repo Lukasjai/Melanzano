@@ -1,5 +1,6 @@
 package com.example.melanzano.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -17,6 +18,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.chillibits.composenumberpicker.HorizontalNumberPicker
 import com.example.melanzano.viewmodels.TimerViewModel
 import java.text.DecimalFormat
@@ -24,7 +28,16 @@ import java.text.NumberFormat
 
 @Preview(showBackground = true)
 @Composable
-fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
+fun ClockScreen(viewModel: TimerViewModel = viewModel(),
+                navController: NavController = rememberNavController()) {
+    
+    var showButton by remember{
+        mutableStateOf(false)
+    }
+
+    if (viewModel.counter.value < 1){
+        showButton = true
+    }
 
     val f: NumberFormat = DecimalFormat("00")
 
@@ -173,6 +186,18 @@ fun ClockScreen(viewModel: TimerViewModel = viewModel()) {
                 },
             )
             Text(text = "minutes", fontSize = 30.sp)
+        }
+
+        Row (modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            if (showButton){
+                Button(onClick = {
+                    Log.i("info", navController.currentBackStackEntry.toString())
+                    navController.navigate("workdonescreen")
+                    showButton = false}) {
+                    Text(text = "Show work done")
+                }
+            }
+
         }
     }
 

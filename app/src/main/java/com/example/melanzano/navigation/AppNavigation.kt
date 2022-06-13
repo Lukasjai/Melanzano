@@ -16,7 +16,9 @@ import com.example.melanzano.viewmodels.TimerViewModel
 
 @Composable
 fun AppNavigation(navController: NavHostController = rememberNavController()){
-    //
+
+
+
     val noteViewModel: NoteViewModel = viewModel()
     val timerViewModel: TimerViewModel = viewModel()
 
@@ -25,7 +27,7 @@ fun AppNavigation(navController: NavHostController = rememberNavController()){
 
         composable(route = "addnotescreen") { AddNoteScreen(viewModel = noteViewModel) }
 
-        composable(route = "clockscreen") { ClockScreen(viewModel = timerViewModel) }
+        composable(route = "clockscreen") { ClockScreen(viewModel = timerViewModel, navController = navController) }
 
         composable(route = "workdonescreen") { WorkDoneScreen(viewModel = noteViewModel) }
     }
