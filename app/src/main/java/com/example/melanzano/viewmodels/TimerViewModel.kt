@@ -13,6 +13,8 @@ class TimerViewModel : ViewModel() {
     private lateinit var timer : CountDownTimer
     private lateinit var pauseTimer : CountDownTimer
 
+    var counter = mutableStateOf(4)
+
     //Countdown timer that takes the specified time in seconds and starts a timer ticking down in second
     fun startTimeCounter() {
         timerStarted = mutableStateOf(true)
@@ -44,8 +46,14 @@ class TimerViewModel : ViewModel() {
     }
 
     fun startPauseCounter(){
+        counter.value--
         pauseTimerStarted.value = true
-        timeInSeconds.value = (userTime * 0.25).toInt()
+        if (counter.value < 1){
+            timeInSeconds.value = userTime
+
+        } else {
+            timeInSeconds.value = (userTime * 0.25).toInt()
+        }
         val timerLength = timeInSeconds.value * 1000.toLong()
         pauseTimer = object : CountDownTimer(timerLength, 1000){
             override fun onTick(millisUntilFinished: Long){
@@ -54,7 +62,13 @@ class TimerViewModel : ViewModel() {
 
             override fun onFinish() {
                 pauseTimerStarted.value = false
-                resetTimerAfterPause()
+                if (counter.value < 1){
+                    counter.value = 4
+                    reset(userTime)
+                } else {
+                    resetTimerAfterPause()
+                }
+
 
             }
         }.start()
