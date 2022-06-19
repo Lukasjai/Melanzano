@@ -26,13 +26,11 @@ class MainActivity : ComponentActivity() {
     override fun onPause() {
         super.onPause()
         Log.i("onPause", "this is onPause")
-
     }
 
     override fun onStart() {
         super.onStart()
         Log.i("onStart", "this is onStart")
-
     }
 
     override fun onDestroy() {
@@ -98,6 +96,13 @@ class MainActivity : ComponentActivity() {
                                 selected = currentRoute == "workdonescreen",
                                 onClick = {
                                     navController.navigate("workdonescreen")
+                                },
+                            )
+                            BottomNavigationItem(
+                                icon = { Icon(imageVector = Icons.Default.Settings, contentDescription = "explanationscreen") },
+                                selected = currentRoute == "explanationscreen",
+                                onClick = {
+                                    navController.navigate("explanationscreen")
                                 },
                             )
                         }
