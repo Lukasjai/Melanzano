@@ -47,11 +47,11 @@ fun ClockScreen(
         mediaPlayerPauseEnd.start()
     }
 
-
+    // pop up button after one whole session to navigate to the work done screen
     var showButton by remember {
         mutableStateOf(false)
     }
-
+    // show the button after the last session is done
     if (viewModel.counter.value < 1) {
         showButton = true
     }
@@ -60,16 +60,19 @@ fun ClockScreen(
 
     val TIMER_DEFAULT_Sec = 5
 
+    // to keep track if the state of the time the user input
     var userTime by remember {
         mutableStateOf(0)
     }
 
+    // user input fpr seconds
     var timerSec by remember {
         mutableStateOf(TIMER_DEFAULT_Sec)
     }
 
     val TIMER_DEFAULT_Min = 0
 
+    // user input fpr minutes
     var timerMin by remember {
         mutableStateOf(TIMER_DEFAULT_Min)
     }
@@ -90,6 +93,7 @@ fun ClockScreen(
             verticalAlignment = Alignment.CenterVertically
         )
         {
+            //change the name of the button
             when {
                 viewModel.timerStarted.value -> {
                     Text(
@@ -124,7 +128,7 @@ fun ClockScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-
+            // Display of our Timer
             Text(
                 text = "00",
                 fontSize = 40.sp,
@@ -167,6 +171,7 @@ fun ClockScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Button(modifier = Modifier
                 .width(200.dp)
                 .height(50.dp),
@@ -183,7 +188,9 @@ fun ClockScreen(
                         viewModel.reset((timerSec + (timerMin * 60)))
                     }
 
-                }) {
+                })
+            //Toggle the name of the start button
+            {
                 if (viewModel.timerStarted.value || viewModel.pauseTimerStarted.value) {
                     Text(
                         text = "Reset",
@@ -198,6 +205,8 @@ fun ClockScreen(
             }
         }
         Divider(modifier = Modifier.padding(40.dp))
+
+        //The two buttons for our user input of seconds and minutes
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             HorizontalNumberPicker(
                 min = 5,
@@ -232,6 +241,7 @@ fun ClockScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            //this button shows up after a whole session and the user can navigate to workdonescreen
             if (showButton) {
                 Button(modifier = Modifier
                     .width(200.dp)

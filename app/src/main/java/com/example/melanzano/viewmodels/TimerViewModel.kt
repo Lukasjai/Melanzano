@@ -17,10 +17,10 @@ class TimerViewModel : ViewModel() {
     var isFinished = false
     private lateinit var timer : CountDownTimer
     private lateinit var pauseTimer : CountDownTimer
-
+    // sound initialization
     var playSound = mutableStateOf(false)
     var playPauseEnd = mutableStateOf(false)
-
+    //counter to keep track of how many learn sessions are over
     var counter = mutableStateOf(4)
 
     //Countdown timer that takes the specified time in seconds and starts a timer ticking down in second
